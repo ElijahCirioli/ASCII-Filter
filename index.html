@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>ASCII Filter</title>
+		<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet" />
+		<link href="./style.css" rel="stylesheet" type="text/css" media="all" />
+	</head>
+	<body>
+		<div id="holder">
+			<p id="text"></p>
+			<button id="button" onclick="cameraStart();">Launch camera</button>
+			<canvas id="imageCanvas" width="128" height="128"></canvas>
+			<video id="camera-view" autoplay playsinline></video>
+			<script src="./index.js"></script>
+		</div>
+	</body>
+</html>
