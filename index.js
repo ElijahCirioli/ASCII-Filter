@@ -31,8 +31,16 @@ const update = () => {
 
 const rgbaToHex = (r, g, b, a) => {
     if (r > 255 || g > 255 || b > 255 || a > 255)
-        throw "Invalid color component";
-    return (256 + r).toString(16).substr(1) +((1 << 24) + (g << 16) | (b << 8) | a).toString(16).substr(1);
+		throw "Invalid color component";
+
+		r = r.toString(16);
+		g = g.toString(16);
+		b = b.toString(16);
+
+		if (r.length == 1) {r = "0" + r;}
+		if (b.length == 1) {g = "0" + g;}
+		if (b.length == 1) {b = "0" + b;}
+		return r + g + b;
 }
 
 const convertToASCII = () => {
@@ -51,6 +59,7 @@ const convertToASCII = () => {
 		data[i] = data[i + 1] = data[i + 2] = luminance;
 
 		const pixelColor = rgbaToHex(data[i], data[i+1], data[i+2], data[i+3]);
+//		const pixelColor = rgbaToHex(r, g, b, a);
 		
 		const index = 9 - Math.floor(luminance / 25.5);
 		let character = spectrum.substring(index, index + 1);
