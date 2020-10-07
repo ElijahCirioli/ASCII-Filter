@@ -1,15 +1,3 @@
-body {
-	margin: 0 0 0 0;
-	background-color: white;
-}
-#holder {
-	position: absolute;
-	top: 0;
-	left: 0;
-	margin: 0 0 0 0;
-	width: 615px;
-	height: 555px;
-}
 #imageCanvas {
 	display: none;
 }
@@ -18,24 +6,7 @@ body {
 	text-align: center;
 	font-size: 8px;
 	line-height: 9px;
-	margin: 0 0 0 0;
-	position: absolute;
-	top: 0;
-	left: 0;
-	color: #a6a6a6;
 }
 #camera-view {
 	display: none;
-}
-#button {
-	position: absolute;
-	margin: 220px 0 0 233px;
-	width: 150px;
-	font-family: "Roboto Mono", monospace;
-	text-align: center;
-	font-size: 28px;
-	cursor: pointer;
-	background-color: #e6e6e6;
-	border: 3px solid black;
-	z-index: 2;
 }

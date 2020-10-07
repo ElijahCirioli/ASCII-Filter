@@ -1,8 +1,6 @@
 const canvas = document.getElementById("imageCanvas");
 const context = canvas.getContext("2d");
 const cameraView = document.getElementById("camera-view");
-const button = document.getElementById("button");
-const output = document.getElementById("text");
 
 const spectrum = " .:-=+*#%@";
 const constraints = { video: { facingMode: "environment" }, audio: false };
@@ -13,13 +11,11 @@ const cameraStart = () => {
 		.then(function (stream) {
 			track = stream.getTracks()[0];
 			cameraView.srcObject = stream;
-			button.style.display = "none";
-			output.style.color = "black";
 			requestAnimationFrame(update);
 		})
 		.catch(function (error) {
 			console.log(error);
-			button.innerHTML = "Camera not found. Try again?";
+			alert("well this isn't going to work if you don't have a camera...");
 		});
 };
 
@@ -53,23 +49,8 @@ const convertToASCII = () => {
 			i += canvas.width * 4;
 		}
 	}
-	output.innerHTML = text;
+	document.getElementById("text").innerHTML = text;
 	context.putImageData(pixels, 0, 0);
 };
 
-const coverWithGarbage = () => {
-	let text = "";
-	for (let i = 0; i < 64; i++) {
-		for (let j = 0; j < 128; j++) {
-			let character = spectrum[Math.floor(Math.random() * 9)];
-			if (character === " ") {
-				character = "&nbsp;";
-			}
-			text += character;
-		}
-		text += "<br />";
-	}
-	output.innerHTML = text;
-};
-
-window.onload = coverWithGarbage();
+window.addEventListener("load", cameraStart, false);
