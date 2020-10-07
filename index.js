@@ -70,6 +70,7 @@ const convertToASCII = () => {
 		text += "<font color=\"#" + pixelColor + ">" + character + "</font>";
 		if ((i + 4) % (canvas.width * 4) === 0) {
 				text += "<br />";
+				i += canvas.width * 4;
 		}
 	}
 	output.innerHTML = text;
