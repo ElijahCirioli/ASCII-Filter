@@ -24,13 +24,20 @@ const cameraStart = () => {
 };
 
 const update = () => {
-	context.drawImage(cameraView, 0, 0, 128, 128);
+	context.drawImage(cameraView, 0, 0, canvas.width, canvas.height);
 	convertToASCII();
 	requestAnimationFrame(update);
 };
 
+const rgbaToHex = (r, g, b, a) => {
+    if (r > 255 || g > 255 || b > 255 || a > 255)
+        throw "Invalid color component";
+    return (256 + r).toString(16).substr(1) +((1 << 24) + (g << 16) | (b << 8) | a).toString(16).substr(1);
+}
+
 const convertToASCII = () => {
 	const pixels = context.getImageData(0, 0, canvas.width, canvas.height);
+
 	const data = pixels.data;
 	let text = "";
 
@@ -38,29 +45,32 @@ const convertToASCII = () => {
 		const r = data[i];
 		const g = data[i + 1];
 		const b = data[i + 2];
+		const a = data[i + 3];
 
 		const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
 		data[i] = data[i + 1] = data[i + 2] = luminance;
 
+		const pixelColor = rgbaToHex(data[i], data[i+1], data[i+2], data[i+3]);
+		
 		const index = 9 - Math.floor(luminance / 25.5);
 		let character = spectrum.substring(index, index + 1);
 		if (character === " ") {
 			character = "&nbsp;";
 		}
-		text += character;
+		
+		text += "<font color=\"#" + pixelColor + ">" + character + "</font>";
 		if ((i + 4) % (canvas.width * 4) === 0) {
-			text += "<br />";
-			i += canvas.width * 4;
+				text += "<br />";
 		}
 	}
 	output.innerHTML = text;
-	context.putImageData(pixels, 0, 0);
+	//context.putImageData(pixels, 0, 0);
 };
 
 const coverWithGarbage = () => {
 	let text = "";
-	for (let i = 0; i < 64; i++) {
-		for (let j = 0; j < 128; j++) {
+	for (let i = 0; i < canvas.height / 2; i++) {
+		for (let j = 0; j < canvas.width; j++) {
 			let character = spectrum[Math.floor(Math.random() * 9)];
 			if (character === " ") {
 				character = "&nbsp;";
